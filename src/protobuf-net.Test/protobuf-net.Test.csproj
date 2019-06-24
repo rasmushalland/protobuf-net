@@ -3,7 +3,7 @@
   <PropertyGroup>
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
     <!--<TargetFrameworks>netcoreapp1.1;net452</TargetFrameworks>-->
-    <TargetFrameworks>netcoreapp2.1;net452</TargetFrameworks>
+    <TargetFrameworks>netcoreapp2.1;net472</TargetFrameworks>
     <LibImport>net</LibImport>
     <Configurations>Debug;Release;VS</Configurations>
   </PropertyGroup>
@@ -11,7 +11,7 @@
     <DefineConstants>FEAT_COMPILER;NO_NHIBERNATE;COREFX</DefineConstants>
     <LibImport>core</LibImport>
   </PropertyGroup>
-  <PropertyGroup Condition="$(TargetFramework)=='net452'">
+  <PropertyGroup Condition="$(TargetFramework)=='net472'">
     <DefineConstants>FEAT_COMPILER;FX30</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
@@ -29,7 +29,7 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.6.0" />
     <PackageReference Include="System.ValueTuple" Version="4.4.0" />
   </ItemGroup>
-  <ItemGroup Condition="$(TargetFramework)=='net452'">
+  <ItemGroup Condition="$(TargetFramework)=='net472'">
     <PackageReference Include="NHibernate" Version="4.1.1.4000" />
     <PackageReference Include="Iesi.Collections" Version="4.0.3" />
   </ItemGroup>
