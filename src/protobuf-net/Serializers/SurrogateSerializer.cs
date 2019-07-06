@@ -98,6 +98,19 @@ namespace ProtoBuf.Serializers
             return false;
         }
 
+        public static MethodInfo GetConversion(TypeModel model, Type forType, Type declaredType, bool toTail)
+        {
+            Type to = toTail ? declaredType : forType;
+            Type from = toTail ? forType : declaredType;
+            MethodInfo op;
+            if (HasCast(model, declaredType, from, to, out op) || HasCast(model, forType, from, to, out op))
+            {
+                return op;
+            }
+            throw new InvalidOperationException("No suitable conversion operator found for surrogate: " +
+                forType.FullName + " / " + declaredType.FullName);
+        }
+
         public MethodInfo GetConversion(TypeModel model, bool toTail)
         {
             Type to = toTail ? declaredType : forType;

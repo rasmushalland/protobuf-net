@@ -33,7 +33,8 @@ namespace ProtoBuf.Meta
            OPTIONS_AllowParseableTypes = 64,
            OPTIONS_AutoAddProtoContractTypesOnly = 128,
            OPTIONS_IncludeDateTimeKind = 256,
-           OPTIONS_DoNotInternStrings = 512;
+           OPTIONS_DoNotInternStrings = 512,
+           OPTIONS_InferScalarValuePassthru = 1024;
 
         private bool GetOption(ushort option)
         {
@@ -58,6 +59,19 @@ namespace ProtoBuf.Meta
         {
             get { return GetOption(OPTIONS_InferTagFromNameDefault); }
             set { SetOption(OPTIONS_InferTagFromNameDefault, value); }
+        }
+
+        /// <summary>
+        /// Global default that enables/disables detection of strongly typed wrapper types
+        /// of primitive types, such as a custom "CustomerID" struct that might simply contain an
+        /// int64, instead of using int64 values directly.
+        /// When a field with such a type is detected, the field is serialized as if it
+        /// was just that in64 value, rather than as a nested structure.
+        /// </summary>
+        public bool InferScalarValuePassthru
+        {
+            get { return GetOption(OPTIONS_InferScalarValuePassthru); }
+            set { SetOption(OPTIONS_InferScalarValuePassthru, value); }
         }
 
         /// <summary>
@@ -258,6 +272,7 @@ namespace ProtoBuf.Meta
                 {
                     MetaType tmp = metaTypesArr[i];
                     if (tmp.IsList && tmp != primaryType) continue;
+                    if (tmp.ScalarValuePassthru) continue;
                     tmp.WriteSchema(bodyBuilder, 0, ref imports, syntax);
                 }
             }
@@ -1865,7 +1880,14 @@ namespace ProtoBuf.Meta
                     imports |= CommonImports.Bcl;
                     return ".bcl.NetObjectProxy";
                 }
-                return this[effectiveType].GetSurrogateOrBaseOrSelf(true).GetSchemaTypeName();
+
+                var surrogateOrBaseOrSelf = this[effectiveType].GetSurrogateOrBaseOrSelf(true);
+                if (surrogateOrBaseOrSelf.ScalarValuePassthru)
+                {
+                    var singleField = surrogateOrBaseOrSelf.GetScalarPassthruSingleField();
+                    return GetSchemaTypeName(Helpers.GetMemberType(singleField), dataFormat, false, false, ref imports);
+                }
+                return surrogateOrBaseOrSelf.GetSchemaTypeName();
             }
             else
             {
@@ -1966,7 +1988,6 @@ namespace ProtoBuf.Meta
                 if (!CallbackSet.CheckCallbackParameters(this, factory)) throw new ArgumentException("Invalid factory signature in " + factory.DeclaringType.FullName + "." + factory.Name, "factory");
             }
         }
-
     }
     /// <summary>
     /// Contains the stack-trace of the owning code when a lock-contention scenario is detected
