@@ -69,6 +69,17 @@ namespace ProtoBuf.unittest.Serializers
             [ProtoMember(10)] public long StudentID;
         }
 
+        // [x] todo test attempted use for types that might not make much sense, e.g. lists. Let them fail just to avoid committing to more than is necessary?
+        // [x] todo soerg for at baade reflection og lcg testes.
+        // [ ] todo evt. soerg for at man kan angive ScalarValuePassThru paa ProtoMember.
+        // [x] todo evt. test af hvad der sker hvis man *ikke* angiver passthru.
+        // [x] todo test/impl af default value: Baade ift. schemagen og ift. opfoersel.
+        // [x] todo test af effect af ProtoContract paa id-type.
+        // [x] todo test af effect af DataContract paa id-type.
+        // [-] todo test af effect af ProtoContract og DataContract paa id-type.
+        // [-] todo test 'readonly' id-type.
+        // [x] todo test at indre Nullable<T>-felt giver fejl.
+
         [Theory]
         [InlineData(true)]
         [InlineData(false)]
