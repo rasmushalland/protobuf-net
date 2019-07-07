@@ -3,7 +3,7 @@
     <RootNamespace>ProtoBuf</RootNamespace>
     <Authors>Marc Gravell</Authors>
     <OutputType>Library</OutputType>
-    <SignAssembly>true</SignAssembly>
+    <!-- <SignAssembly>true</SignAssembly> -->
     <DelaySign>False</DelaySign>
     <AssemblyOriginatorKeyFile>$(MSBuildThisFileDirectory)ProtoBuf.snk</AssemblyOriginatorKeyFile>
     <Copyright>See https://github.com/mgravell/protobuf-net</Copyright>
