@@ -6,9 +6,9 @@ and remove the net20, net35, and uap10.0 build targets from <TargetFrameworks>
 <Project Sdk="Microsoft.NET.Sdk">
 <!--<Project Sdk="MSBuild.Sdk.Extras">-->
   <PropertyGroup>
-    <AssemblyName>protobuf-net</AssemblyName>
-    <Title>protobuf-net</Title>
-    <Description>Provides simple access to fast and efficient "Protocol Buffers" serialization from .NET applications</Description>
+    <AssemblyName>protobuf-macomnet</AssemblyName>
+    <Title>protobuf-macomnet</Title>
+    <Description>Macom variant of protobuf-net: This variant supports 'scalar value passthru'. Hopefully this will end upstream, at which point this package will no longer be needed.</Description>
     <TargetFrameworks>net472;netstandard1.0;netstandard2.0;netcoreapp2.1</TargetFrameworks>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DefineConstants>EMIT_ASSEMBLY_INFO</DefineConstants>
@@ -138,6 +138,6 @@ and remove the net20, net35, and uap10.0 build targets from <TargetFrameworks>
   </ItemGroup>
   <ItemGroup Condition="'$(ImportLibs)' == 'standard'">
     <PackageReference Include="System.Reflection.TypeExtensions" Version="4.4.0" />
-    <PackageReference Include="System.Xml.XmlSerializer" Version="4.3.0" />    
+    <PackageReference Include="System.Xml.XmlSerializer" Version="4.3.0" />
   </ItemGroup>
 </Project>
